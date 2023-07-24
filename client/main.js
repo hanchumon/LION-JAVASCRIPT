@@ -16,6 +16,7 @@ import {
 const submit = getNode('#submit');
 const nameField = getNode('#nameField');
 const resultArea = getNode('.result');
+let state = false;
 
 // [phase-1]
 // 1. 주접 떨기 버튼을 클릭할 수 있는 핸들러를 연결해 주세요.
@@ -40,34 +41,39 @@ function handleSubmit(e) {
     showAlert('.alert-error','이름이 없습니다!',2000)
 
     shake.restart();
-
+    state = false;
     return;
   }
 
-  if (!isNumericString(name)) {
-    showAlert('.alert-error','제대로된 이름을 입력해주세요!',2000)
-
-    shake.restart();
-
-    return;
+    if (!isNumericString(name)) {
+      showAlert('.alert-error','제대로된 이름을 입력해주세요!',2000)
+  
+      shake.restart();
+      state = false;
+      console.log(state);
+  
+      return;
+    }else{
+      state = true;
+      console.log(state);
   }
 
   clearContents(resultArea);
   insertLast(resultArea, pick);
+  
+  console.log(state);
 }
-
 // 이름을 제대로 입력했을 때 클립보드에 복사될 수 있도록.
-// let state = false;
 
-// state = true;
 
-// if state
 
-function handleCopy(params) {
+function handleCopy(e) {
+if (state){
   const text = resultArea.textContent;
   copy(text).then(()=>{
     showAlert('.alert-success', '클립보드 복사 완료!',2000)
   })
+}
 }
 submit.addEventListener('click', handleSubmit);
 resultArea.addEventListener('click',handleCopy)
