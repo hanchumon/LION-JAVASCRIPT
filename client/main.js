@@ -43,6 +43,8 @@ function handleSubmit(e) {
     shake.restart();
     state = false;
     return;
+  }else{
+    state = true;
   }
 
     if (!isNumericString(name)) {
@@ -68,8 +70,8 @@ function handleSubmit(e) {
 
 
 function handleCopy(e) {
-if (state){
   const text = resultArea.textContent;
+if (state){
   copy(text).then(()=>{
     showAlert('.alert-success', '클립보드 복사 완료!',2000)
   })
